@@ -111,67 +111,112 @@
   </div>
 
 
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
+<h1 id="tryhackme-sighunt-writeup-walkthrough">Tryhackme Sighunt Writeup/Walkthrough</h1>
+<p>This room aims to be a supplementary room for Sigma rule creation. In this scenario, you will act as one of the Detection Engineers that will craft Sigma Rules based on the Indicators of Compromise (IOCs) collected by your Incident Responders.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*dHYklK-25Rh154YQanVHgA.png" alt=""></p>
+<p>Room Link :  <a href="https://tryhackme.com/room/sighunt">https://tryhackme.com/room/sighunt</a></p>
+<h1 id="-prerequisites-"><strong>Prerequisites</strong></h1>
+<p>This <a href="https://tryhackme.com/room/sighunt">room</a>  requires basic knowledge of detection engineering and Sigma rule creation. I recommend going through the following rooms before attempting this challenge.</p>
+<ul>
+<li><a href="https://tryhackme.com/room/sigma">Sigma</a></li>
+</ul>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*KQOhM4G87np1UxDEGD4k1Q.png" alt=""></p>
+<h1 id="-sighunt-interface-"><strong>SigHunt Interface</strong></h1>
+<p>Before we proceed, let’s deploy the attached machine in this task since it may take up to 3–5 minutes to initialize the services.</p>
+<p>We will use this link to access the interface —  <a href="http://machine_ip/">http://MACHINE_IP</a></p>
+<h1 id="-how-to-use-the-sighunt-interface-"><strong>How to use the SigHunt Interface:</strong></h1>
+<ul>
+<li><strong>Run</strong>  — Submit your Sigma rule and see if it detects the malicious IOC.</li>
+<li><strong>Text Editor —</strong> Write your Sigma rule in this section.</li>
+<li><strong>Create Rule</strong>  — Create a Sigma rule for the malicious IOC.</li>
+<li><strong>View Log</strong>  — View the log details associated with the malicious IOC.</li>
+</ul>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*TyEqf9jPmN01WlXR.png" alt=""></p>
+<h1 id="-huntme-incident-"><strong>Huntme Incident</strong></h1>
+<p><strong>Scenario</strong></p>
+<p>You are hired as a Detection Engineer for your organization. During your first week, a ransomware incident has just concluded, and the Incident Responders of your organization have successfully mitigated the threat. With their collective effort, the Incident Response (IR) Team provided the IOCs based on their investigation. Your task is to create Sigma rules to improve the detection capabilities of your organization and prevent future incidents similar to this.</p>
+<p><strong>Indicators of Compromise</strong></p>
+<p>Based on the given incident report, the Incident Responders discovered the following attack chain:</p>
+<ul>
+<li>Execution of malicious HTA payload from a phishing link.</li>
+<li>Execution of Certutil tool to download Netcat binary.</li>
+<li>Netcat execution to establish a reverse shell.</li>
+<li>Enumeration of privilege escalation vectors through PowerUp.ps1.</li>
+<li>Abused service modification privileges to achieve System privileges.</li>
+<li>Collected sensitive data by archiving via 7-zip.</li>
+<li>Exfiltrated sensitive data through  <strong>cURL</strong> binary.</li>
+<li>Executed ransomware with  <strong>huntme</strong>  as the file extension.</li>
+</ul>
+<p>In addition, the Incident Responders provided a table of IOCs at your disposal.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*4w5CGuedBzZzs3rT4ypJsQ.png" alt=""></p>
+<h1 id="-rule-creation-standards-"><strong>Rule Creation Standards</strong></h1>
+<p>The Detection Engineering Team follows a standard when creating a Sigma Rule. You may refer to the guidelines below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*QA-qUZ-lY7o3J8sEH_j6vg.png" alt=""></p>
+<h1 id="answer-the-questions-below-">Answer the questions below :</h1>
+<h1 id="-what-is-the-challenge-1-flag-"><strong>What is the Challenge #1 flag?</strong></h1>
+<p>First of all go the  <a href="https://www.uuidgenerator.net/">Online UUID generator</a>  and copy that code and paste it in the id section of  <strong>suspicious_mshta_execution.yml</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*ZVoibIio9QWt8boMTt3PiQ.png" alt=""></p>
+<p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: HTA payload detection<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1<br>    ParentImage|endswith: &#39;\chrome.exe&#39;<br>    Image|endswith: &#39;\mshta.exe&#39;<br>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$suspicious_mshta_execution.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*8VtbASa5y30n5GbxJE-KwQ.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-2-flag-"><strong>What is the Challenge #2 flag?</strong></h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: certutil download<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\certutil.exe&#39;<br>    CommandLine|contains:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' -urlcache '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -split '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -f '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$certutil_file_ingress.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*KWoeEYyWlFRBgdh5829y8g.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-3-flag-"><strong>What is the Challenge #3 flag?</strong></h1>
+<p>   title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Netcat Execution<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection1:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\nc.exe&#39;<br>    CommandLine|contains|all:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' -e '</span>  </span>
+</code></pre><p>  selection2:<br>    Hashes|contains: &#39;523613A7B9DFA398CBD5EBD2DD0F4F38&#39;  </p>
+<p>  condition: selection1 or selection2</p>
+<p>After writing the sigma rule we can run the code  <strong>$netcat_reverse_shell.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*aVp3OT0UwpFgmJwUjmrj6g.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-4-flag-"><strong>What is the Challenge #4 flag?</strong></h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: PowerUp Enumeration<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\powershell.exe&#39;<br>    CommandLine|contains:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">'Invoke-AllChecks'</span>  
+</span> -<span class="ruby"> <span class="hljs-string">'PowerUp'</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$powerup_enumeration.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-5-flag-">What is the Challenge #5 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Service Binary<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\sc.exe&#39;<br>    CommandLine|contains|all:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' config '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' binPath= '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -e '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$service_binary_privesc.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-6-flag-">What is the Challenge #6 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: RunOnce Persistence<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\reg.exe&#39;<br>    CommandLine|contains:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' add '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' RunOnce '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$runonce_persistence.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-7-flag-">What is the Challenge #7 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: 7z Archive<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\7z.exe&#39;<br>    CommandLine|contains:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' a '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -p '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$7z_suspicious_archive.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-8-flag-">What is the Challenge #8 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Curl Data<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<p>   Image|endswith: &#39;\curl.exe&#39;<br>    CommandLine|contains:   </p>
+<pre><code> -<span class="ruby"> <span class="hljs-string">' -d '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$ curl_exfiltration.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-9-flag-">What is the Challenge #9 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Ransomware File<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 11<br>    TargetFilename:  &#39;*.huntme&#39;  </p>
+<p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$ransomware_file_encryption.yml</strong> to get the flag.</p>
+<h1 id="thanks-for-reading">Thanks For Reading</h1>
 
-> medium-to-markdown@0.0.3 convert C:\dev\misc\medium-to-markdown
-> node index.js "https://medium.com/@almenon214/keeping-yourself-motivated-as-a-coder-a16a6fcf49c7"
-
-Keeping yourself motivated as a coder
-=====================================
-
-[![Almenon](https://miro.medium.com/fit/c/96/96/1*4FAOBq9qVna6uHkxaolTtA.png)](https://medium.com/@almenon214?source=post_page-----a16a6fcf49c7----------------------)[Almenon](https://medium.com/@almenon214?source=post_page-----a16a6fcf49c7----------------------)Follow[Sep 23, 2018](https://medium.com/@almenon214/keeping-yourself-motivated-as-a-coder-a16a6fcf49c7?source=post_page-----a16a6fcf49c7----------------------) · 4 min read
-
-Programmers probably have one of the most distracting jobs in existence. Their entire workday is spent in front of a computer — a literally endless source of entertainment and pleasure, a limitless virtual heaven. With literally just a click of a button, you could be in another world. You could be slaying dragons. You could be learning about the [great molasses flood of 1919](https://www.damninteresting.com/the-great-molasses-flood-of-1919/). You could literally be doing _anything._ So why do programmers spend their time programming, a hobby that could only be described as exciting by masochistic workaholics?
-
-<img class="cp t u gs ak" src="https://miro.medium.com/max/2048/1\*S15R5ty8G-kRGo-ghk2EGA.jpeg" width="1024" height="815" role="presentation"/>
-
-Pictured: sticky, sweet, syrupy disaster
-
-Well, the vast sums of money that a software engineer gets is a pretty good reason. Another reason is that they probably are workaholics. You don’t see doctors spending all-nighters at hackathons for a 20$ starbucks giftcard, or linguists designing [languages composed of Arnold Schwarzenegger quotes](http://lhartikk.github.io/ArnoldC/) as a joke.
-
-Or maybe they do it for the pride. Making open source projects gets you virtual street cred — the bigger the project, the better the cred. Guido, the creator of python, is practically a king. Before abdicating his throne he was called the BDFL, or _benevolent dictator for life_. Contributing to a project is a way of becoming something greater than youself and leaving a lasting mark on society. Make a commit, and git will forever stamp you into history, a hash 785b312 saying **_I was there_**_._ _xNinja47, 4/30/2005, changed 3 files for the better_.
-
-Or it could just be for practical reasons — you need to keep your skills sharp, after all. And open source work looks good on your resume. Not everyone loves programming — for some it’s just a high paying job to slog through untill they get home to their families and social life.
-
-But if you’re reading this article, maybe you _don’t_ have anything to motivate you. Maybe reddit sounds like a good idea. Stop! Don’t do it! No [funny cat pics](https://i.reddituploads.com/788c8a3ab05243d59259410aa0eb71f9?fit=max&h=1536&w=1536&s=47f691afce2df783c20f31d702427957)! No [cute bears](https://i.redd.it/vkyg59t2ddp01.jpg)! Keep on writing this medium article! (_I may be speaking to myself here)_. So without further ado, here is some strategies to employ for keeping yourself in shape:
-
-1.  **Deadlines**: set deadlines for yourself — github [milestones](https://github.com/Almenon/AREPL-vscode/milestones?state=closed) and [issues](https://github.com/Almenon/AREPL-vscode/issues) are great for this. If you look at my projects I have _hundreds_ of issues I create for myself to keep track of my work. Another benefit of writing issues is that you have written documentation to refer to when you go back to working on it. Or if you’re not on github, you can simply set up calendar events. Maybe even tell your friends that you will get something done by a certain time — that creates commitment.
-2.  **Releases.** Your project is a piece of crap. It barely functions, the architecture is horrible, and [you don’t even really know what you’re doing](https://en.wikipedia.org/wiki/Impostor_syndrome). The last thing you want to do is to expose your baby duckling to the public. But at a certain point you have to cut your losses — you can’t just keep on working on something forever, because then you’re going to have burnout. And you may be pleasantly surprised. Maybe people will like it. Worst case scenario, people will hate it, but in the process of shitting all over it they inadvertently give you helpful advice to fix it. In fact, in my experience the detractors are more helpful than the fans, because they will give you actual advice, not just “oh that looks cool”.
-3.  **Maximize Fun**. Look for more pleasurable and fulfilling fun, rather than lazy and cheap entertainment. For example, it’s far too easy to _control-n_ to open a new tab and type in the letter r to get the autocomplete for reddit. That’s just 3 keys and a enter. Reddit is fun, I love it, but its filled with low effort reposts. Taking the time to watch a show or even a movie might be a better idea — you have a clear chance to stop (at the end) rather than scrolling through reddit’s infinite amount of content. Important disclaimer: _never_ click on netflix’s next episode button. That’s a feature designed by the devil to get you to binge-watch shows and hate yourself afterwards. If you actually have time to watch the next episode then you can wait for the credits to go by. Or more likely, realize what you are doing and go do something productive.
-4.  **Take walks.** Rest your eyes. Think about how to approach the problem. If you’re me, try reading while walking. It’s not that dangerous — you’ve only bumped into a pole once or twice.
-5.  **Get the support of others**. Join a slack/discord community. Make a program that other people use. Ask for advice from your friends. Go to programming meetups. Go to [programming conventions](https://medium.com/@almenon214/pycon-2018-6b1c45889e3b) — it’s a great excuse for a vacation, and it’s a lot less dry than it sounds. Go past your normal boundaries — you might be surprised as to what you are capable of.
-6.  **Add** [**telemetry**](https://medium.com/@almenon214/adding-telemetry-to-your-vscode-extension-f3d52d2e573c) **or** [**alerting**](https://medium.com/@almenon214/setting-up-email-alerts-for-your-vscode-extension-using-azure-d755651b2e0d) **to your program**. It might not be practical for a small application, but it is _extremely_ useful as a motivating tool. Every day I get emails from around the world. People use [AREPL](https://github.com/Almenon/AREPL-vscode) in [New York, Canada, Brazil, Chile. Europe, Japan, Israel, and Pakistan](https://medium.com/@almenon214/arepl-stats-for-june-5e0c87636c3). Every day it’s a different country. It’s significant to know that people are using what I make and relying on me to continue developing it. In a similar vein, I also get emails whenever my reddit bot posts. I can see if people upvote it or if there are problems with the bot I need to fix.
-
-Hopefully these tips are helpful to you. If they are, I’d love to hear it. Or maybe you have a tip of your own — either way, leave a comment below!
- 
 		
 </section>
 
