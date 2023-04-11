@@ -117,6 +117,23 @@
     
   </div>
 
+ <script>
+function normalMode() {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+    document.getElementById("Normalbutton").className = "active";
+    document.getElementById("Darkbutton").className = "inactive";
+}
+
+function darkMode() {
+    document.body.style.backgroundColor = "#282828";
+    document.body.style.color = "white";
+    document.getElementById("Normalbutton").className = "inactive";
+    document.getElementById("Darkbutton").className = "active";
+}
+</script>         
+          
+          
   <header class="post-header slide-top">
     <h4 class="post-title">HackTheBox</h2>
     <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blue.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
@@ -223,21 +240,7 @@ description:  Detects  outlook  initiating
     <button id="Darkbutton" onclick="darkMode()">Dark mode</button>
 </div>
 
-<script>
-function normalMode() {
-    document.body.style.backgroundColor = "white";
-    document.body.style.color = "black";
-    document.getElementById("Normalbutton").className = "active";
-    document.getElementById("Darkbutton").className = "inactive";
-}
 
-function darkMode() {
-    document.body.style.backgroundColor = "#282828";
-    document.body.style.color = "white";
-    document.getElementById("Normalbutton").className = "inactive";
-    document.getElementById("Darkbutton").className = "active";
-}
-</script>
       
       
 
