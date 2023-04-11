@@ -211,13 +211,35 @@ description:  Detects  outlook  initiating
 </blockquote>
 <p>These SIGMA rules can be converted into the detection and monitoring tool to hunt for suspicious log activity within the network. To learn more about SIGMA rules, check this introductory room on  <a href="https://tryhackme.com/room/sigma">Sigma</a>.</p>
 
-
-
 </article>
   </div>
   <footer class="footer">
     <span class="footer__copyright">&copy; 2023 - Md Amiruddin</span>
   </footer><br><br>
+      
+      
+<div id="Modeselector" style="float:right;">
+    <button id="Normalbutton" onclick="normalMode()">Normal mode</button>
+    <button id="Darkbutton" onclick="darkMode()">Dark mode</button>
+</div>
+
+<script>
+function normalMode() {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+    document.getElementById("Normalbutton").className = "active";
+    document.getElementById("Darkbutton").className = "inactive";
+}
+
+function darkMode() {
+    document.body.style.backgroundColor = "#222C45";
+    document.body.style.color = "white";
+    document.getElementById("Normalbutton").className = "inactive";
+    document.getElementById("Darkbutton").className = "active";
+}
+</script>
+      
+      
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
@@ -226,40 +248,4 @@ description:  Detects  outlook  initiating
   </body>
 </html>
 
-<code>&lt;html&gt;
-
-&lt;head&gt;
-    &lt;style&gt;
-
-        /* Add this code to make the body have a default color */
-        body {
-            color: #333;
-        }
-
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-
-&lt;!-- Add these buttons for Normal and Dark modes--&gt;
-&lt;div style="position:absolute; right: 20px; top: 10px;"&gt; 
-    &lt;button class="normalMode" onclick="normalMode()"&gt;Normal Mode&lt;/button&gt;
-    &lt;button class="darkMode" onclick="darkMode()"&gt;Dark Mode&lt;/button&gt;
-&lt;/div&gt;
-
-&lt;/body&gt;
-
-&lt;script&gt; 
-    // Add this javascript here to detect and switch to the normal and dark mode.
-    function normalMode() {
-        document.body.style.color = "#333";
-    }
-
-    function darkMode() {
-        document.body.style.color = "#fff";
-    }
-&lt;/script&gt;
-
-&lt;/html&gt;
-</code>
 
