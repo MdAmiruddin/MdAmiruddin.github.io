@@ -117,25 +117,66 @@
     
   </div>
 
-<div class="toggleContainer">
-  <div class="toggleButton">
-    <label class="switch">
-      <input type="checkbox" id="modeToggle" onChange="toggleMode()">
-      <span class="slider round"></span>
-    </label>
-  </div>
-</div>
+<head>
+  <style type="text/css">
+  body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: Calibri, Sans Serif;
+  }
 
-<script>
-  function toggleMode() {
-    const checkbox = document.querySelector('#modeToggle');
-    if (checkbox.checked) {
-      document.documentElement.style.setProperty('--bgcolor', 'darkblue');
-    } else {
-      document.documentElement.style.setProperty('--bgcolor', 'white');
+  #switch {
+    display: block;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+  </style>
+  <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', toggleSwitcher);
+  function toggleSwitcher() {
+    // Set up the basic elements and their attributes
+    var bodyTag = document.getElementsByTagName('body')[0];
+    var divSwitcher = document.createElement('div');
+    divSwitcher.setAttribute('id','switch');
+    var toggleSwitch = document.createElement('input');
+    toggleSwitch.setAttribute('type','checkbox');
+    toggleSwitch.setAttribute('id','toggle-switch');
+    divSwitcher.appendChild(toggleSwitch);
+
+    // Add the toggleSwitcher to the body
+    bodyTag.appendChild(divSwitcher);
+
+
+    // Listen for a 'click' event
+    toggleSwitch.addEventListener('click', toggleStyle);
+
+    // Change the Style depending on the toggleSwitch state
+    // UI: change the toggleSwitch color
+    function toggleStyle() {
+      if (document.getElementById('toggle-switch').checked) {
+        // Dark Mode
+        bodyTag.style.backgroundColor = '#1A1A1A';
+        bodyTag.style.color = '#FFFFFF';
+        toggleSwitch.style.backgroundColor = '#212121';
+      } else {
+        // Normal Mode
+        bodyTag.style.backgroundColor = '#FFFFFF';
+        bodyTag.style.color = '#000000';
+        toggleSwitch.style.backgroundColor = '#E2E2E2';
+      }
     }
   }
 </script>
+  <title>Toggle Light/Dark Mode</title>
+</head>
+<body>
+  <h1>Toggle Light/Dark Mode</h1>
+  <div>
+    This page has a toggle switch that can be used to switch between light and dark modes.
+  </div>
+</body>
+
 
 
 
