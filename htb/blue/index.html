@@ -117,21 +117,26 @@
     
   </div>
 
- <script>
-function normalMode() {
-    document.body.style.backgroundColor = "white";
-    document.body.style.color = "black";
-    document.getElementById("Normalbutton").className = "active";
-    document.getElementById("Darkbutton").className = "inactive";
-}
+ <div class="toggleContainer">
+  <div class="toggleButton">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" onChange="toggleMode()">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
 
-function darkMode() {
-    document.body.style.backgroundColor = "#282828";
-    document.body.style.color = "white";
-    document.getElementById("Normalbutton").className = "inactive";
-    document.getElementById("Darkbutton").className = "active";
-}
-</script>         
+<script>
+  function toggleMode() {
+    const checkbox = document.querySelector('#modeToggle');
+    if (checkbox.checked) {
+      document.documentElement.style.setProperty('--bgcolor', 'darkblue');
+    } else {
+      document.documentElement.style.setProperty('--bgcolor', 'white');
+    }
+  }
+</script>
+       
           
           
   <header class="post-header slide-top">
@@ -234,11 +239,7 @@ description:  Detects  outlook  initiating
     <span class="footer__copyright">&copy; 2023 - Md Amiruddin</span>
   </footer><br><br>
       
-      
-<div id="Modeselector" style="float:right;">
-    <button id="Normalbutton" onclick="normalMode()">Normal mode</button>
-    <button id="Darkbutton" onclick="darkMode()">Dark mode</button>
-</div>
+     
 
 
       
