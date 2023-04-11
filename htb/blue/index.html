@@ -117,25 +117,36 @@
     
   </div>
 
- <div class="toggleContainer">
-  <div class="toggleButton">
-    <label class="switch">
-      <input type="checkbox" id="modeToggle" onChange="toggleMode()">
-      <span class="slider round"></span>
-    </label>
-  </div>
-</div>
+<head>
+<style>
+body {
+  background-color: #f2f2f2;
+}
+
+.darkMode{
+  background-color: #000000;
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+
+<h2>Toggle Mode</h2>
+<br/>
+<button id="darkModeToggle">Dark Mode</button>
+
 
 <script>
-  function toggleMode() {
-    const checkbox = document.querySelector('#modeToggle');
-    if (checkbox.checked) {
-      document.documentElement.style.setProperty('--bgcolor', 'darkblue');
-    } else {
-      document.documentElement.style.setProperty('--bgcolor', 'white');
-    }
-  }
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
 </script>
+
+</body>
+
        
           
           
