@@ -131,21 +131,75 @@
           
           
           
-<label>
-    <input type="checkbox" id="themeSwitcher" onclick="switchTheme()"/>
-    <span class="slider round"></span>
-</label>
+// Create HTML elements
 
-<script>
-    function switchTheme() {
-        const themeSwitcher = document.querySelector('#themeSwitcher');
-        if (themeSwitcher.checked) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    }
-</script>
+//Sliding Ball Switch
+<div class="switch">
+  <input type="checkbox" class="switch-input" id="themeSwitch" />
+  <label class="switch-label" for="themeSwitch">
+    <span class="switch-button"></span>
+  </label>
+</div>
+
+//CSS
+.switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 52px;
+  height: 24px;
+  margin: 20px 0;
+}
+
+.switch-label {
+  position: relative;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.switch-input {
+  display: none;
+}
+
+.switch-input:checked+.switch-label {
+  background: #0f0f0f;
+}
+
+.switch-button {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 34px;
+  height: 34px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.3s;
+}
+
+.switch-input:checked+.switch-label .switch-button {
+  left: 24px;
+  background: #f0f0f0;
+}
+
+// JavaScript
+
+const switchInput = document.querySelector('#themeSwitch');
+
+switchInput.addEventListener('change', switchTheme);
+
+function switchTheme() {
+  if (switchInput.checked) {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+}
 
          
  
