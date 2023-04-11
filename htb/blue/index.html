@@ -119,6 +119,36 @@
 
   <header class="post-header slide-top">
     <h4 class="post-title">HackTheBox</h2>
+    <head>
+<style>
+body {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-family: Calibri, Sans Serif;
+}
+
+.darkMode{
+  background-color: #000000;
+  color: #ffffff;
+}
+
+</style>
+</head>
+<body>
+<button id="darkModeToggle">Dark</button>
+
+
+<script>
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
+</script>
+
+</body>
+
     <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blue.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
     <h2 class="post-title">Blue</h2><br>
   </header>
