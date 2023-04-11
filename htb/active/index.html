@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex">
+	  
+	  
+<head>
+<style>
+body {
+  background-color: #FFFFFF;
+}
+
+.darkMode{
+  background-color: #000000;
+  color: #ffffff;
+}
+
+</style>
+</head>
+<body>
+<button id="darkModeToggle">Dark Mode</button>
+
+
+<script>
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
+</script>
+
+</body>	  
+	  
+	  
 
   <title>Writeup HackTheBox Active</title>
 
