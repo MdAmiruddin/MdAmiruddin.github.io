@@ -117,17 +117,27 @@
     
   </div>
 
+<div class="toggleContainer">
+  <div class="toggleButton">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" onChange="toggleMode()">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
 
-<style>
-body {
-  background-color: #f2f2f2;
-}
+<script>
+  function toggleMode() {
+    const checkbox = document.querySelector('#modeToggle');
+    if (checkbox.checked) {
+      document.documentElement.style.setProperty('--bgcolor', 'darkblue');
+    } else {
+      document.documentElement.style.setProperty('--bgcolor', 'white');
+    }
+  }
+</script>
 
-.darkMode{
-  background-color: #000000;
-  color: #ffffff;
-}
-</style>
+
 
 
        
