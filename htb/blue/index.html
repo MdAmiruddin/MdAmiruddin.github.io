@@ -119,62 +119,35 @@
 
   <header class="post-header slide-top">
    
-    <html>
-<head>
-  <style type="text/css">
-  body {
-    background-color: #FFFFFF;
-    color: #000000;
-    font-family: Calibri, Sans Serif;
-  }
+    <head>
+<style>
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: Calibri, Sans Serif;
+}
 
-  #switch {
-    display: block ;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-  }
-  
-  </style>
-  <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', toggleSwitcher);
-  function toggleSwitcher() {
-    // Set up the basic elements and their attributes
-    var bodyTag = document.getElementsByTagName('body')[0];
-    var divSwitcher = document.createElement('div');
-    divSwitcher.setAttribute('id','switch');
-    var toggleSwitch = document.createElement('input');
-    toggleSwitch.setAttribute('type','checkbox');
-    toggleSwitch.setAttribute('id','toggle-switch');
-    divSwitcher.appendChild(toggleSwitch);
+.darkMode{
+  background-color: #ffffff;
+  color: #000000;
+}
 
-    // Add the toggleSwitcher to the body
-    bodyTag.appendChild(divSwitcher);
-
-
-    // Listen for a 'click' event
-    toggleSwitch.addEventListener('click', toggleStyle);
-
-    // Change the Style depending on the toggleSwitch state
-    // UI: change the toggleSwitch color
-    function toggleStyle() {
-      if (document.getElementById('toggle-switch').checked) {
-        // Dark Mode
-        bodyTag.style.backgroundColor = '#1A1A1A';
-        bodyTag.style.color = '#FFFFFF';
-        toggleSwitch.style.backgroundColor = '#212121';
-      } else {
-        // Normal Mode
-        bodyTag.style.backgroundColor = '#FFFFFF';
-        bodyTag.style.color = '#000000';
-        toggleSwitch.style.backgroundColor = '#E2E2E2';
-      }
-    }
-  }
-</script>
-  <title>Toggle Light/Dark Mode</title>
+</style>
 </head>
+<body>
+<button id="darkModeToggle">☀️ </button>
 
+
+<script>
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
+</script>
+
+</body>
 
     <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blue.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
    
