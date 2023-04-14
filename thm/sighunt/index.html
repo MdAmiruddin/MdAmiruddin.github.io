@@ -201,6 +201,25 @@ body {
 <h1 id="-what-is-the-challenge-1-flag-"><strong>What is the Challenge #1 flag?</strong></h1>
 <p>First of all go the  <a href="https://www.uuidgenerator.net/">Online UUID generator</a>  and copy that code and paste it in the id section of  <strong>suspicious_mshta_execution.yml</strong></p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*ZVoibIio9QWt8boMTt3PiQ.png" alt=""></p>
+          
+<code><span class="p">title: sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: HTA payload detection
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+    ParentImage|endswith: '\chrome.exe'
+    Image|endswith: '\mshta.exe'
+  condition: selection</span>
+</code></pre></div></div><br>        
+          
 <p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: HTA payload detection<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1<br>    ParentImage|endswith: &#39;\chrome.exe&#39;<br>    Image|endswith: &#39;\mshta.exe&#39;<br>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$suspicious_mshta_execution.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*8VtbASa5y30n5GbxJE-KwQ.jpeg" alt=""></p>
