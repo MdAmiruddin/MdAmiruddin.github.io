@@ -192,55 +192,82 @@ body {
 <li>Exfiltrated sensitive data through  <strong>cURL</strong> binary.</li>
 <li>Executed ransomware with  <strong>huntme</strong>  as the file extension.</li>
 </ul>
-
-          
-<h1 id="task-5-detection-mitigation">Task 5 : Detection/Mitigation</h1>
-<p>Now that we have gone through the steps to weaponize the  <code>CVE-2023-23397</code>  attack on Outlook, let&#39;s talk about a few ways to detect this attack within the network. Each attack leaves patterns or artifacts that could help the detection team identify the threats. It all depends on the network visibility and the log sources that are being collected and providing the much important visibility.</p>
-<p>Here, we will discuss a few ways to detect this attack on the host.</p>
-<h2 id="sigma-rules">Sigma Rules</h2>
-<p>The following Sigma rule detects Outlook initiating a connection to a WebDav or SMB share, indicating a post-exploitation phase.</p>
-<pre><code>title:  CVE<span class="hljs-string">-2023</span><span class="hljs-string">-23397</span>  Exploitation  Attempt  
-id:  73c59189<span class="hljs-string">-6</span>a6d<span class="hljs-string">-4</span>b9f-a748<span class="hljs-string">-8</span>f6f9bbed75c  
-status:  experimental  
-description:  Detects  outlook  initiating  
-</code></pre><p>This  <a href="https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_rundll32_webdav_client_susp_execution.yml">Sigma Rule</a>  looks to detect svchost.exe spawning rundll32.exe with command arguments like  <code>C:\windows\system32\davclnt.dll,DavSetCookie</code>, which indicates a post-exploitation/exfiltration phase.</p>
-<blockquote>
-<p>title: Suspicious WebDav Client Execution<br>id: 982e9f2d-1a85-4d5b-aea4-31f5e97c6555<br>status: experimental<br>description: &#39;Detects &quot;svchost.exe&quot; spawning &quot;rundll32.exe&quot; with command arguments<br>  like C:\windows\system32\davclnt.dll,DavSetCookie. This could be an indicator of<br>  exfiltration or use of WebDav to launch code (hosted on WebDav Server) or potentially<br>  a sign of exploitation of CVE-2023-23397 &#39;<br>references:  </p>
-<ul>
-<li><a href="https://twitter.com/aceresponder/status/1636116096506818562">https://twitter.com/aceresponder/status/1636116096506818562</a>  </li>
-<li><a href="https://www.mdsec.co.uk/2023/03/exploiting-cve-2023-23397-microsoft-outlook-elevation-of-privilege-vulnerability/">https://www.mdsec.co.uk/2023/03/exploiting-cve-2023-23397-microsoft-outlook-elevation-of-privilege-vulnerability/</a>  </li>
-<li><a href="https://www.pwndefend.com/2023/03/15/the-long-game-persistent-hash-theft/">https://www.pwndefend.com/2023/03/15/the-long-game-persistent-hash-theft/</a><br>author: Nasreddine Bencherchali (Nextron Systems), Florian Roth (Nextron Systems)<br>date: 2023/03/16<br>tags:  <ul>
-<li>attack.exfiltration  </li>
-<li>attack.t1048.003  </li>
-<li>cve.2023.23397<br>logsource:<br>category: process_creation<br>product: windows<br>detection:<br>selection:<br>ParentImage|endswith: \svchost.exe<br>Image|endswith: \rundll32.exe<br>CommandLine|contains: C:\windows\system32\davclnt.dll,DavSetCookie<br>CommandLine|re: ://\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}<br>filter_local_ips:<br>CommandLine|contains:  </li>
-<li>://10.  </li>
-<li>://192.168.  </li>
-<li>://172.16.  </li>
-<li>://172.17.  </li>
-<li>://172.18.  </li>
-<li>://172.19.  </li>
-<li>://172.20.  </li>
-<li>://172.21.  </li>
-<li>://172.22.  </li>
-<li>://172.23.  </li>
-<li>://172.24.  </li>
-<li>://172.25.  </li>
-<li>://172.26.  </li>
-<li>://172.27.  </li>
-<li>://172.28.  </li>
-<li>://172.29.  </li>
-<li>://172.30.  </li>
-<li>://172.31.  </li>
-<li>://127.  </li>
-<li>://169.254.<br>condition: selection and not 1 of filter_*<br>falsepositives:  <ul>
-<li>Unknown<br>level: high</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<p>These SIGMA rules can be converted into the detection and monitoring tool to hunt for suspicious log activity within the network. To learn more about SIGMA rules, check this introductory room on  <a href="https://tryhackme.com/room/sigma">Sigma</a>.</p>
+<p>In addition, the Incident Responders provided a table of IOCs at your disposal.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*4w5CGuedBzZzs3rT4ypJsQ.png" alt=""></p>
+<h1 id="-rule-creation-standards-"><strong>Rule Creation Standards</strong></h1>
+<p>The Detection Engineering Team follows a standard when creating a Sigma Rule. You may refer to the guidelines below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*QA-qUZ-lY7o3J8sEH_j6vg.png" alt=""></p>
+<h1 id="answer-the-questions-below-">Answer the questions below :</h1>
+<h1 id="-what-is-the-challenge-1-flag-"><strong>What is the Challenge #1 flag?</strong></h1>
+<p>First of all go the  <a href="https://www.uuidgenerator.net/">Online UUID generator</a>  and copy that code and paste it in the id section of  <strong>suspicious_mshta_execution.yml</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*ZVoibIio9QWt8boMTt3PiQ.png" alt=""></p>
+<p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: HTA payload detection<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1<br>    ParentImage|endswith: &#39;\chrome.exe&#39;<br>    Image|endswith: &#39;\mshta.exe&#39;<br>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$suspicious_mshta_execution.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*8VtbASa5y30n5GbxJE-KwQ.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-2-flag-"><strong>What is the Challenge #2 flag?</strong></h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: certutil download<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|endswith: '\certutil.exe'  
+CommandLine|contains:   
+ -<span class="ruby"> <span class="hljs-string">' -urlcache '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -split '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -f '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$certutil_file_ingress.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*KWoeEYyWlFRBgdh5829y8g.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-3-flag-"><strong>What is the Challenge #3 flag?</strong></h1>
+<p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Netcat Execution<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection1:<br>    EventID: 1   </p>
+<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\nc.exe'</span>  
+CommandLine|contains|<span class="hljs-string">all:</span>   
+ - <span class="hljs-string">' -e '</span>  
+</code></pre><p>  selection2:<br>    Hashes|contains: &#39;523613A7B9DFA398CBD5EBD2DD0F4F38&#39;  </p>
+<p>  condition: selection1 or selection2</p>
+<p>After writing the sigma rule we can run the code  <strong>$netcat_reverse_shell.yml</strong>  to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*aVp3OT0UwpFgmJwUjmrj6g.jpeg" alt=""></p>
+<h1 id="-what-is-the-challenge-4-flag-"><strong>What is the Challenge #4 flag?</strong></h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: PowerUp Enumeration<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\powershell.exe'</span>  
+CommandLine|<span class="hljs-string">contains:</span>   
+ - <span class="hljs-string">'Invoke-AllChecks'</span>  
+ - <span class="hljs-string">'PowerUp'</span>  
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$powerup_enumeration.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-5-flag-">What is the Challenge #5 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Service Binary<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|endswith: '\sc.exe'  
+CommandLine|contains|all:   
+ -<span class="ruby"> <span class="hljs-string">' config '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' binPath= '</span>  
+</span> -<span class="ruby"> <span class="hljs-string">' -e '</span>  </span>
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$service_binary_privesc.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-6-flag-">What is the Challenge #6 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: RunOnce Persistence<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\reg.exe'</span>  
+CommandLine|<span class="hljs-string">contains:</span>   
+ - <span class="hljs-string">' add '</span>  
+ - <span class="hljs-string">' RunOnce '</span>  
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$runonce_persistence.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-7-flag-">What is the Challenge #7 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: 7z Archive<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\7z.exe'</span>  
+CommandLine|<span class="hljs-string">contains:</span>   
+ - <span class="hljs-string">' a '</span>  
+ - <span class="hljs-string">' -p '</span>  
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$7z_suspicious_archive.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-8-flag-">What is the Challenge #8 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Curl Data<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\curl.exe'</span>  
+CommandLine|<span class="hljs-string">contains:</span>   
+ - <span class="hljs-string">' -d '</span>  
+</code></pre><p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$ curl_exfiltration.yml</strong>  to get the flag.</p>
+<h1 id="what-is-the-challenge-9-flag-">What is the Challenge #9 flag?</h1>
+<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Ransomware File<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 11<br>    TargetFilename:  &#39;*.huntme&#39;  </p>
+<p>  condition: selection</p>
+<p>After writing the sigma rule we can run the code  <strong>$ransomware_file_encryption.yml</strong> to get the flag.</p>
+<h1 id="thanks-for-reading-">Thanks For Reading.</h1>
 
 
 
