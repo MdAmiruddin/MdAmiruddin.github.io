@@ -203,7 +203,7 @@ body {
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*ZVoibIio9QWt8boMTt3PiQ.png" alt=""></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ code </span><span class="p"> -->
+<code><span class="ve">❯ code </span><span class="p">-->
 title: sighunt
 id: 232c5562-f775-4ad4-a162-816c99b013a6
 status: rule testing 
@@ -220,27 +220,39 @@ detection:
     ParentImage|endswith: '\chrome.exe'
     Image|endswith: '\mshta.exe'
   condition: selection
-
-https://medium.com/@t0pazg3m/pass-the-ticket-ptt-attack-in-mimikatz-and-a-gotcha-96a5805e257a
-https://ired.team/offensive-security-experiments/active-directory-kerberos-abuse/as-rep-roasting-using-rubeus-and-hashcat
-https://posts.specterops.io/kerberoasting-revisited-d434351bd4d1
-https://www.harmj0y.net/blog/redteaming/not-a-security-boundary-breaking-forest-trusts/
-https://www.varonis.com/blog/kerberos-authentication-explained/
-https://www.blackhat.com/docs/us-14/materials/us-14-Duckwall-Abusing-Microsoft-Kerberos-Sorry-You-Guys-Don't-Get-It-wp.pdf
-https://www.sans.org/cyber-security-summit/archives/file/summit-archive-1493862736.pdf
   </span>
 </code></pre></div></div><br>
           
 
-          
-          
-    
-          
-<p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: HTA payload detection<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1<br>    ParentImage|endswith: &#39;\chrome.exe&#39;<br>    Image|endswith: &#39;\mshta.exe&#39;<br>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$suspicious_mshta_execution.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*8VtbASa5y30n5GbxJE-KwQ.jpeg" alt=""></p>
 <h1 id="-what-is-the-challenge-2-flag-"><strong>What is the Challenge #2 flag?</strong></h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: certutil download<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: certutil download
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\certutil.exe'
+    CommandLine|contains: 
+     - ' -urlcache '
+     - ' -split '
+     - ' -f '
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+                    
+          
 <pre><code>Image|endswith: '\certutil.exe'  
 CommandLine|contains:   
  -<span class="ruby"> <span class="hljs-string">' -urlcache '</span>  
@@ -250,7 +262,32 @@ CommandLine|contains:
 <p>After writing the sigma rule we can run the code  <strong>$certutil_file_ingress.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*KWoeEYyWlFRBgdh5829y8g.jpeg" alt=""></p>
 <h1 id="-what-is-the-challenge-3-flag-"><strong>What is the Challenge #3 flag?</strong></h1>
-<p>title: sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Netcat Execution<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection1:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: Netcat Execution
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection1:
+    EventID: 1 
+ 
+    Image|endswith: '\nc.exe'
+    CommandLine|contains|all: 
+     - ' -e '
+  selection2:
+    Hashes|contains: '523613A7B9DFA398CBD5EBD2DD0F4F38'
+   
+  condition: selection1 or selection2
+  </span>
+</code></pre></div></div><br>  
+  
 <pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\nc.exe'</span>  
 CommandLine|contains|<span class="hljs-string">all:</span>   
  - <span class="hljs-string">' -e '</span>  
@@ -259,7 +296,31 @@ CommandLine|contains|<span class="hljs-string">all:</span>
 <p>After writing the sigma rule we can run the code  <strong>$netcat_reverse_shell.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*aVp3OT0UwpFgmJwUjmrj6g.jpeg" alt=""></p>
 <h1 id="-what-is-the-challenge-4-flag-"><strong>What is the Challenge #4 flag?</strong></h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: PowerUp Enumeration<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: PowerUp Enumeration
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains: 
+     - 'Invoke-AllChecks'
+     - 'PowerUp'
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\powershell.exe'</span>  
 CommandLine|<span class="hljs-string">contains:</span>   
  - <span class="hljs-string">'Invoke-AllChecks'</span>  
@@ -267,7 +328,32 @@ CommandLine|<span class="hljs-string">contains:</span>
 </code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$powerup_enumeration.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-5-flag-">What is the Challenge #5 flag?</h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Service Binary<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: Service Binary
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\sc.exe'
+    CommandLine|contains|all: 
+     - ' config '
+     - ' binPath= '
+     - ' -e '
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <pre><code>Image|endswith: '\sc.exe'  
 CommandLine|contains|all:   
  -<span class="ruby"> <span class="hljs-string">' config '</span>  
@@ -276,7 +362,32 @@ CommandLine|contains|all:
 </code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$service_binary_privesc.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-6-flag-">What is the Challenge #6 flag?</h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: RunOnce Persistence<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: RunOnce Persistence
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\reg.exe'
+    CommandLine|contains: 
+     - ' add '
+     - ' RunOnce '
+  
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\reg.exe'</span>  
 CommandLine|<span class="hljs-string">contains:</span>   
  - <span class="hljs-string">' add '</span>  
@@ -284,7 +395,32 @@ CommandLine|<span class="hljs-string">contains:</span>
 </code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$runonce_persistence.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-7-flag-">What is the Challenge #7 flag?</h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: 7z Archive<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: 7z Archive
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\7z.exe'
+    CommandLine|contains: 
+     - ' a '
+     - ' -p '
+  
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\7z.exe'</span>  
 CommandLine|<span class="hljs-string">contains:</span>   
  - <span class="hljs-string">' a '</span>  
@@ -292,14 +428,59 @@ CommandLine|<span class="hljs-string">contains:</span>
 </code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$7z_suspicious_archive.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-8-flag-">What is the Challenge #8 flag?</h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Curl Data<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 1   </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: Curl Data
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 1 
+ 
+    Image|endswith: '\curl.exe'
+    CommandLine|contains: 
+     - ' -d '
+ 
+  
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\curl.exe'</span>  
 CommandLine|<span class="hljs-string">contains:</span>   
  - <span class="hljs-string">' -d '</span>  
 </code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$ curl_exfiltration.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-9-flag-">What is the Challenge #9 flag?</h1>
-<p>title: Sighunt<br>id: 232c5562-f775-4ad4-a162-816c99b013a6<br>status: rule testing<br>description: Ransomware File<br>author: lordofficial<br>date: 06/02/2023<br>modified: 06/02/23<br>logsource:<br>  product: windows<br>  service: process_creation<br>detection:<br>  selection:<br>    EventID: 11<br>    TargetFilename:  &#39;*.huntme&#39;  </p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+title: Sighunt
+id: 232c5562-f775-4ad4-a162-816c99b013a6
+status: rule testing 
+description: Ransomware File
+author: lordofficial
+date: 06/02/2023
+modified: 06/02/23
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    EventID: 11
+    TargetFilename:  '*.huntme'
+   
+  condition: selection
+  </span>
+</code></pre></div></div><br>
+
 <p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$ransomware_file_encryption.yml</strong> to get the flag.</p>
 <h1 id="thanks-for-reading-">Thanks For Reading.</h1>
