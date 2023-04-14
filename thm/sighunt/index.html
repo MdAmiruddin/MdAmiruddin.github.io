@@ -254,12 +254,6 @@ detection:
 </code></pre></div></div><br>
                     
           
-<pre><code>Image|endswith: '\certutil.exe'  
-CommandLine|contains:   
- -<span class="ruby"> <span class="hljs-string">' -urlcache '</span>  
-</span> -<span class="ruby"> <span class="hljs-string">' -split '</span>  
-</span> -<span class="ruby"> <span class="hljs-string">' -f '</span>  </span>
-</code></pre><p>  condition: selection</p>
 <p>After writing the sigma rule we can run the code  <strong>$certutil_file_ingress.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*KWoeEYyWlFRBgdh5829y8g.jpeg" alt=""></p>
 <h1 id="-what-is-the-challenge-3-flag-"><strong>What is the Challenge #3 flag?</strong></h1>
@@ -290,11 +284,7 @@ detection:
   </span>
 </code></pre></div></div><br>  
   
-<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\nc.exe'</span>  
-CommandLine|contains|<span class="hljs-string">all:</span>   
- - <span class="hljs-string">' -e '</span>  
-</code></pre><p>  selection2:<br>    Hashes|contains: &#39;523613A7B9DFA398CBD5EBD2DD0F4F38&#39;  </p>
-<p>  condition: selection1 or selection2</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$netcat_reverse_shell.yml</strong>  to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*aVp3OT0UwpFgmJwUjmrj6g.jpeg" alt=""></p>
 <h1 id="-what-is-the-challenge-4-flag-"><strong>What is the Challenge #4 flag?</strong></h1>
@@ -324,11 +314,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\powershell.exe'</span>  
-CommandLine|<span class="hljs-string">contains:</span>   
- - <span class="hljs-string">'Invoke-AllChecks'</span>  
- - <span class="hljs-string">'PowerUp'</span>  
-</code></pre><p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$powerup_enumeration.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-5-flag-">What is the Challenge #5 flag?</h1>
 
@@ -358,12 +344,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<pre><code>Image|endswith: '\sc.exe'  
-CommandLine|contains|all:   
- -<span class="ruby"> <span class="hljs-string">' config '</span>  
-</span> -<span class="ruby"> <span class="hljs-string">' binPath= '</span>  
-</span> -<span class="ruby"> <span class="hljs-string">' -e '</span>  </span>
-</code></pre><p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$service_binary_privesc.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-6-flag-">What is the Challenge #6 flag?</h1>
 
@@ -393,11 +374,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\reg.exe'</span>  
-CommandLine|<span class="hljs-string">contains:</span>   
- - <span class="hljs-string">' add '</span>  
- - <span class="hljs-string">' RunOnce '</span>  
-</code></pre><p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$runonce_persistence.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-7-flag-">What is the Challenge #7 flag?</h1>
 
@@ -427,11 +404,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\7z.exe'</span>  
-CommandLine|<span class="hljs-string">contains:</span>   
- - <span class="hljs-string">' a '</span>  
- - <span class="hljs-string">' -p '</span>  
-</code></pre><p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$7z_suspicious_archive.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-8-flag-">What is the Challenge #8 flag?</h1>
 
@@ -461,10 +434,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<pre><code>Image|<span class="hljs-string">endswith:</span> <span class="hljs-string">'\curl.exe'</span>  
-CommandLine|<span class="hljs-string">contains:</span>   
- - <span class="hljs-string">' -d '</span>  
-</code></pre><p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$ curl_exfiltration.yml</strong>  to get the flag.</p>
 <h1 id="what-is-the-challenge-9-flag-">What is the Challenge #9 flag?</h1>
 
@@ -489,7 +459,7 @@ detection:
   </span>
 </code></pre></div></div><br>
 
-<p>  condition: selection</p>
+
 <p>After writing the sigma rule we can run the code  <strong>$ransomware_file_encryption.yml</strong> to get the flag.</p>
 <h1 id="thanks-for-reading-">Thanks For Reading.</h1>
 
