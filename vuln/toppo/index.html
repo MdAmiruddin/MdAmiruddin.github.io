@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup VulnHub Toppo</title>
+
+  <meta name="description" content="VulnHub Toppo Writeup By Md Amiruddin">
+  <meta name="author" content="Md Amiruddin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup VulnHub Toppo">
+  <meta name="twitter:description" content="VulnHub Toppo Writeup By Md Amiruddin">
+  <meta name="twitter:creator" content="Md Amiruddin">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/MdAmiruddin/MdAmiruddin.github.io/main/logo/vuln.png" />
+
+  <meta property="og:site_name" content="Md Amiruddin" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="VulnHub Toppo Socket">
+  <meta property="og:description" content="VulnHub Toppo Writeup By Md Amiruddin">
+  <meta property="og:image" content="https://raw.githubusercontent.com/MdAmiruddin/MdAmiruddin.github.io/main/logo/vuln.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/MdAmiruddin/MdAmiruddin.github.io/main/logo/vuln.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup VulnHub Toppo" href="/feed.xml">
+</head>
+
+
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.gif)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="Md Amiruddin">
+          <h1 class="panel-cover__title panel-title scale-up-center">Md Amiruddin</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">This Site Contains CTFs Writeup</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/vuln" title="Md Amiruddin" class="blog-button">VulnHub</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+             <li class="navigation__item grow">
+                <a href="https://github.com/MdAmiruddin" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://linkedin.com/in/mdamiruddin" title="Linkedin" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">Linkedin</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://mdamiruddin.medium.com" title="Medium" target="_blank">
+                  <i class="icon icon-social-medium"></i>
+                  <span class="label">Medium</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="mailto:sample@gmail.com" title="Email" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+    
+  </div>
+
+  <header class="post-header slide-top">
+   
+    <head>
+<style>
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: Calibri, Sans Serif;
+}
+
+.darkMode{
+  background-color: #ffffff;
+  color: #000000;
+}
+
+</style>
+</head>
+<body>
+<button id="darkModeToggle">☀️ </button>
+
+
+<script>
+  const darkModeToggle = document.querySelector('#darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('darkMode')
+  })
+  
+</script>
+
+</body>
+    <br>
+    <picture><img src="https://raw.githubusercontent.com/MdAmiruddin/MdAmiruddin.github.io/main/logo/vuln.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+   
+  </header>
+
+
+<br>
+<br>          
+<h1 id="vulnhub-machine-toppo-writeup-walkthrough">Vulnhub Machine Toppo Writeup/Walkthrough</h1>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*IpJFG0VCOF9Y-FtL.jpg" alt=""></p>
+<p>Difficulty : Easy</p>
+<p>Flags: There is one flag</p>
+<p>DHCP : Enabled<br>IP Address : Automatically assigned</p>
+<p>For this Toppo machine, I used Virtual Box to run the target machine. Kali Linux is the attacker machine for solving this CTF.</p>
+<p>The Toppo OVA file can be downloaded <a href="https://www.vulnhub.com/entry/toppo-1,245/">here</a>.</p>
+<p><strong>Footprinting</strong></p>
+<p>As you can see the Toppo machine is powered on ad it shows it’s ip as 10.0.2.12. Now before we begin use ifconfig to find the IP address of your attack machine (kali) .</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*nwIIJuAZnwYyYnXF.png" alt=""></p>
+<p>My target has an IP address of 10.0.2.12 and my Kali has an IP address of 10.0.2.5. These addresses to apply to me and my network, yours will probably differ.</p>
+<p>We will use the command &gt; <strong>netdiscover -i eth0</strong> to discover the Toppo ip address.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*FEmuoYfrrsoaS01y.png" alt=""></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*LltKqKU_0j4BcHfU.png" alt=""></p>
+<p>We next need to find out what ports and services are available. For this purpose we can do a Nmap scan.</p>
+<p>Command used &gt; <strong>nmap 192.168.0.31 -p</strong> <strong>-sV</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*rut3Ab_MBEZEhbyU.png" alt=""></p>
+<p>The scan shows that the target has 4 open ports.</p>
+<p>As we can see port 80 is available so, we will open the browser and in the address bar we will type the IP Address and it will show the homepage of the website .</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*WdJ4R-oXJBOX_bjP.png" alt=""></p>
+<p>Since Webpage is not showing any useful information. Now it’s Time to break out with Dirb. Dirb will help us to find the directories of the website. DIRB is a Web Content Scanner. It looks for existing (and/or hidden) Web Objects. It basically works by launching a dictionary based attack against a web server and analyzing the responses.</p>
+<p>Command used &gt; <strong>dirb</strong> <a href="http://10.0.2.12"><strong>http://10.0.2.12</strong></a></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*GtSb-wOCroYZ8LwD.png" alt=""></p>
+<p>After some time, dirb will show some useful directories and from the results we have got an admin directory which would be our first choice of where to start looking. Just need to copy the URL and place it in the address bar of our browser.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*Jf-pilwQD4Rtx44-.png" alt=""></p>
+<p>We have found some important notes.txt file in the admin directory. After opening that notes.txt file we found one password {12345ted123} so, we will try to use that password to login with ssh which is running on port 22.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*UmPosvJu32Wz-JIq.png" alt=""></p>
+<p>Since we already have a password with a name in it and the target is running SSH and a possible username and password combination will be as follows given below.</p>
+<p>Command used &gt; ssh ted@10.0.2.12</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*crRV_SesIV4dPwid.png" alt=""></p>
+<p>As you can see we got logged in so we will dive deeper to find the required Flag.</p>
+<p>Now it’s time to exploit and to root. Let’s see if the OS version is vulnerable.</p>
+<p><strong>&gt; <em>cat /etc/issue</em></strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*QG5u-4azYg3m2pUG.png" alt=""></p>
+<p>I have already checked that our target OS Debian 3.16.51–3 is not vulnerable so we try something different to find our root flag.</p>
+<p>By using the following command, we can enumerate all binaries having SUID permission.</p>
+<p>SUID is a special file permission for executable files which enables other users to run the file with effective permissions of the file owner. Instead of the normal x which represents execute permissions, you will see an s (to indicate SUID) special permission for the user.</p>
+<p>Command used &gt; <strong>find / -perm -u=s -type f 2&gt;/dev/null</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*6PPHcwQG539fBZ-T.png" alt=""></p>
+<p>We have found python2.7 binaries so, we are going to exploit it.</p>
+<p>By using Python 2.7, we can gain root access and we will find the root flag using the following commands:</p>
+<p>Command used &gt; <strong>python2.7 -c ‘import pty;pty.spawn(“/bin/sh”)’</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/0*TFPISki6ECuTJ2xY.png" alt=""></p>
+<p>As you can see we have found our root flag in the root directory.This CTF is of beginner level or easy but it is fun doing it.</p>
+<p><strong>Thankyou For Reading.</strong></p>
+
+
+
+
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - Md Amiruddin</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
