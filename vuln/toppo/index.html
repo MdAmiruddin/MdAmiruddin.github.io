@@ -178,33 +178,69 @@ netdiscover -i eth0
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*FEmuoYfrrsoaS01y.png" alt=""></p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*LltKqKU_0j4BcHfU.png" alt=""></p>
 <p>We next need to find out what ports and services are available. For this purpose we can do a Nmap scan.</p>
-<p>Command used &gt; <strong>nmap 192.168.0.31 -p</strong> <strong>-sV</strong></p>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+nmap 192.168.0.31 -p -sV
+  </span>
+</code></pre></div></div><br>            
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*rut3Ab_MBEZEhbyU.png" alt=""></p>
 <p>The scan shows that the target has 4 open ports.</p>
 <p>As we can see port 80 is available so, we will open the browser and in the address bar we will type the IP Address and it will show the homepage of the website .</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*WdJ4R-oXJBOX_bjP.png" alt=""></p>
 <p>Since Webpage is not showing any useful information. Now it’s Time to break out with Dirb. Dirb will help us to find the directories of the website. DIRB is a Web Content Scanner. It looks for existing (and/or hidden) Web Objects. It basically works by launching a dictionary based attack against a web server and analyzing the responses.</p>
-<p>Command used &gt; <strong>dirb</strong> <a href="http://10.0.2.12"><strong>http://10.0.2.12</strong></a></p>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+dirb http://10.0.2.12
+  </span>
+</code></pre></div></div><br>           
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*GtSb-wOCroYZ8LwD.png" alt=""></p>
 <p>After some time, dirb will show some useful directories and from the results we have got an admin directory which would be our first choice of where to start looking. Just need to copy the URL and place it in the address bar of our browser.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*Jf-pilwQD4Rtx44-.png" alt=""></p>
 <p>We have found some important notes.txt file in the admin directory. After opening that notes.txt file we found one password {12345ted123} so, we will try to use that password to login with ssh which is running on port 22.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*UmPosvJu32Wz-JIq.png" alt=""></p>
 <p>Since we already have a password with a name in it and the target is running SSH and a possible username and password combination will be as follows given below.</p>
-<p>Command used &gt; ssh ted@10.0.2.12</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+ssh ted@10.0.2.12
+  </span>
+</code></pre></div></div><br>           
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*crRV_SesIV4dPwid.png" alt=""></p>
 <p>As you can see we got logged in so we will dive deeper to find the required Flag.</p>
 <p>Now it’s time to exploit and to root. Let’s see if the OS version is vulnerable.</p>
-<p><strong>&gt; <em>cat /etc/issue</em></strong></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+cat /etc/issue
+  </span>
+</code></pre></div></div><br>             
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*QG5u-4azYg3m2pUG.png" alt=""></p>
 <p>I have already checked that our target OS Debian 3.16.51–3 is not vulnerable so we try something different to find our root flag.</p>
 <p>By using the following command, we can enumerate all binaries having SUID permission.</p>
 <p>SUID is a special file permission for executable files which enables other users to run the file with effective permissions of the file owner. Instead of the normal x which represents execute permissions, you will see an s (to indicate SUID) special permission for the user.</p>
-<p>Command used &gt; <strong>find / -perm -u=s -type f 2&gt;/dev/null</strong></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+find / -perm -u=s -type f 2>/dev/null
+  </span>
+</code></pre></div></div><br>           
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*6PPHcwQG539fBZ-T.png" alt=""></p>
 <p>We have found python2.7 binaries so, we are going to exploit it.</p>
 <p>By using Python 2.7, we can gain root access and we will find the root flag using the following commands:</p>
-<p>Command used &gt; <strong>python2.7 -c ‘import pty;pty.spawn(“/bin/sh”)’</strong></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ command </span><span class="p">used
+python2.7 -c 'import pty;pty.spawn("/bin/sh")'
+  </span>
+</code></pre></div></div><br>           
+          
 <p><img src="https://miro.medium.com/v2/resize:fit:700/0*TFPISki6ECuTJ2xY.png" alt=""></p>
 <p>As you can see we have found our root flag in the root directory.This CTF is of beginner level or easy but it is fun doing it.</p>
 <p><strong>Thankyou For Reading.</strong></p>
